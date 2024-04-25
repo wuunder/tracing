@@ -1,0 +1,8 @@
+# App artifacts
+/_build
+/deps
+/doc
+*.ez
+**/cover/
+.elixir_ls/
+erl_crash.dump
