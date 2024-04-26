@@ -1,0 +1,137 @@
+name: Test and build
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: "Run tests"
+    runs-on: ubuntu-latest
+    env:
+      MIX_ENV: test
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+
+      - name: Read .tool-versions
+        uses: marocchino/tool-versions-action@v1.1.1
+        id: versions
+
+      - name: Set up Elixir ${{steps.versions.outputs.elixir}}
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: ${{steps.versions.outputs.elixir}}
+          otp-version: ${{steps.versions.outputs.erlang}}
+
+      - name: Setup Node
+        uses: actions/setup-node@v3.5.1
+        with:
+          node-version: ${{steps.versions.outputs.nodejs}}
+
+      - name: Restore dependencies cache
+        uses: actions/cache@v3.0.11
+        with:
+          path: |
+            deps
+            _build
+          key: ${{ runner.os }}-mixv2-${{ hashFiles('**/mix.lock', 'config/*.exs') }}
+          restore-keys: ${{ runner.os }}-mixv2-
+
+      - name: Setup deps
+        run: | 
+          mix deps.get 
+          mix deps.unlock --check-unused
+
+      - name: Compile Wuunder
+        run: mix compile --warnings-as-errors
+
+      - name: Check formatter
+        run: mix format --check-formatted
+
+      - name: Run tests
+        run: mix test --warnings-as-errors
+
+      - name: Cleanup
+        run: mix clean
+
+
+  dialyzer:
+    name: "Run Dialyzer"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+
+      - name: Read .tool-versions
+        uses: marocchino/tool-versions-action@v1.1.1
+        id: versions
+
+      - name: Set up Elixir ${{steps.versions.outputs.elixir}}
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: ${{steps.versions.outputs.elixir}}
+          otp-version: ${{steps.versions.outputs.erlang}}
+
+      - name: Cache deps
+        id: cache-deps
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-elixir-deps
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
+
+      - name: Cache compiled build
+        id: cache-build
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-compiled-build
+        with:
+          path: _build
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
+            ${{ runner.os }}-mix-
+
+      - name: Restore PLT cache
+        id: plt_cache
+        uses: actions/cache/restore@v3
+        with:
+          key: |
+            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+          path: |
+            priv/plts
+
+      - name: Setup deps
+        run: | 
+          mix deps.get 
+          mix deps.unlock --check-unused
+
+      - name: Compile Wuunder
+        run: mix compile --warnings-as-errors
+
+      - name: Create PLTs
+        if: steps.plt_cache.outputs.cache-hit != 'true'
+        run: mix dialyzer --plt
+
+      - name: Save PLT cache
+        id: plt_cache_save
+        uses: actions/cache/save@v3
+        if: steps.plt_cache.outputs.cache-hit != 'true'
+        with:
+          key: |
+            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+          path: |
+            priv/plts
+
+      - name: Run dialyzer
+        run: mix dialyzer --format github
+
+      - name: Cleanup
+        run: mix clean
