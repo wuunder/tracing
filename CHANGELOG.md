@@ -1,6 +1,6 @@
-# Changelog for OT v1.0 
+# Changelog for OT v0.1 
 
-## 1.0.0 (2024-04-26)
+## 0.1.0 (2024-04-26)
 
 * Add `OpenTelemetryPhoenix`
 * Add `OpenTelemetryPhoenixLiveView`

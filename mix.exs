@@ -5,7 +5,7 @@ defmodule OT.MixProject do
     [
       app: :ot,
       name: "OT",
-      version: "1.0.0",
+      version: "0.1.0",
       elixir: "~> 1.16",
       compilers: Mix.compilers(),
       deps: deps(),
