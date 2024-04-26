@@ -47,10 +47,9 @@ defmodule OT.MixProject do
       {:opentelemetry_monitor, "~> 0.1",
        github: "wuunder/opentelemetry-erlang-contrib",
        branch: "opentelemetry_monitor",
-       sparse: "instrumentation/opentelemetry_monitor",
-       override: true},
-      {:opentelemetry_telemetry, "~> 1.1", override: true},
-      {:telemetry, "~> 1.0", override: true},
+       sparse: "instrumentation/opentelemetry_monitor"},
+      {:opentelemetry_telemetry, "~> 1.0.0"},
+      {:telemetry, "~> 1.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 1.0"}
     ]
