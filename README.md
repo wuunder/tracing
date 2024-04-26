@@ -1,6 +1,7 @@
 # OT
 
-**TODO: Add description**
+OT is a library that contains some standardized telemetry modules with ease of use. It allows control over which modules
+should be activated.
 
 ## Installation
 
