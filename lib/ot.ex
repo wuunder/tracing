@@ -176,11 +176,11 @@ defmodule OT do
   end
 
   def setup_element(:phoenix) do
-    OpenTelemetryPhoenix.setup()
+    OpentelemetryPhoenix.setup()
   end
 
   def setup_element(:live_view) do
-    OpenTelemetryPhoenixLiveview.setup()
+    OpentelemetryPhoenixLiveView.setup()
   end
 
   def setup_element(:oban), do: OT.ObanTelemetry.setup()

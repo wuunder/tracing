@@ -4,5 +4,10 @@
 /doc
 *.ez
 **/cover/
+
 .elixir_ls/
+
 erl_crash.dump
+
+priv/plts/*.plt
+priv/plts/*.plt.hash

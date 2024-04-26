@@ -16,7 +16,6 @@ defmodule OT.Telemetry do
 
   @impl true
   def init(config) do
-
     children = [
       {:telemetry_poller, measurements: config.measurements, period: config.period}
       # Add reporters as children of your supervision tree.
