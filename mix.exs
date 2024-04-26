@@ -4,17 +4,20 @@ defmodule OT.MixProject do
   def project do
     [
       app: :ot,
+      name: "OT",
       version: "1.0.0",
       elixir: "~> 1.16",
       compilers: Mix.compilers(),
-      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      description: description(),
       dialyzer: [
         plt_file: {:no_warn, "priv/plts/project.plt"},
         format: :dialyxir,
         ignore_warnings: ".dialyzer_ignore.exs",
         paths: ["_build/dev/lib/ot/ebin"]
       ],
-      deps: deps()
+      package: package(),
+      start_permanent: Mix.env() == :prod
     ]
   end
 
@@ -50,6 +53,23 @@ defmodule OT.MixProject do
       {:telemetry, "~> 1.0", override: true},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 1.0"}
+    ]
+  end
+
+  defp description() do
+    """
+      Standardized library for using OpenTelemetry / :telemetry in Elixir applications. 
+      Provides telemetry modules for Phoenix, LiveView, ChromicPDF and Oban. Also contains a Monitor and Telemetry module."
+    """
+  end
+
+  defp package() do
+    [
+      name: "ot",
+      organization: "wuunder",
+      files: ~w(lib .formatter.exs mix.exs README.md LICENSE CHANGELOG.md),
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/wuunder/ot"}
     ]
   end
 end
