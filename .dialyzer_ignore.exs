@@ -1,4 +1,4 @@
 [
-  {"lib/ot/sampler.ex", :call_with_opaque}
+  {"lib/tracing/sampler.ex", :call_with_opaque}
 ]
 
