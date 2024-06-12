@@ -19,7 +19,7 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 
 ## Setup
 
-Tracing relies on `OpentelemetryMonitor` that should be added to the children list in your `Application.start/2`.
+Tracing relies on `Tracing.Monitor` that should be added to the children list in your `Application.start/2`.
 
 Add `Tracing.setup/1` to `Application.start/2` too with the modules you want to enable telemetry for.
 
@@ -31,7 +31,7 @@ defmodule MyApp.Application do
 
   def start(_type, _args) do
     children = [
-      OpentelemetryMonitor,
+      Tracing.Monitor,
       Tracing.Telemetry,
       # or
       {Tracing.Telemetry, measurements: [], period: 15_000},

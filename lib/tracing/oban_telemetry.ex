@@ -69,7 +69,7 @@ defmodule Tracing.ObanTelemetry do
     })
     |> Span.set_attributes(attributes)
 
-    OpentelemetryMonitor.monitor(OpenTelemetry.Tracer.current_span_ctx())
+    Tracing.Monitor.monitor(OpenTelemetry.Tracer.current_span_ctx())
   end
 
   def handle_event([:oban, :job, :stop], _, meta, _) do

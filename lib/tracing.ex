@@ -154,7 +154,7 @@ defmodule Tracing do
       parent_span = OpenTelemetry.Tracer.current_span_ctx()
 
       if unquote(opts)[:monitor] do
-        OpentelemetryMonitor.monitor(parent_span)
+        Tracing.monitor(parent_span)
       end
 
       fn unquote_splicing(fun_args) ->
