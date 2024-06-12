@@ -10,6 +10,7 @@ defmodule Tracing.MixProject do
       compilers: Mix.compilers(),
       deps: deps(),
       description: description(),
+      organization: "wuunder",
       dialyzer: [
         plt_file: {:no_warn, "priv/plts/project.plt"},
         format: :dialyxir,
@@ -58,7 +59,6 @@ defmodule Tracing.MixProject do
   defp package() do
     [
       name: "tracing",
-      organization: "wuunder",
       files: ~w(lib .formatter.exs mix.exs README.md LICENSE CHANGELOG.md),
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/wuunder/tracing"}
