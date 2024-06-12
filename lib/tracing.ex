@@ -185,10 +185,6 @@ defmodule Tracing do
     OpentelemetryPhoenix.setup()
   end
 
-  def setup_element(:live_view) do
-    OpentelemetryPhoenixLiveView.setup()
-  end
-
   def setup_element(:oban), do: Tracing.ObanTelemetry.setup()
   def setup_element(:aws), do: Tracing.AWSTelemetry.setup()
   def setup_element(:chromic_pdf), do: Tracing.ChromicPDFTelemetry.setup()

@@ -39,7 +39,7 @@ defmodule MyApp.Application do
     ]
     opts = [...]
 
-    Tracing.setup([:phoenix, :live_view, :oban, :aws, :chromic_pdf])
+    Tracing.setup([:phoenix, :oban, :aws, :chromic_pdf])
 
     Supervisor.start_link(children, opts)
   end
