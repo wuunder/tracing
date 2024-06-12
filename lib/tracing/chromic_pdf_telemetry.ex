@@ -1,4 +1,4 @@
-defmodule OT.ChromicPDFTelemetry do
+defmodule Tracing.ChromicPDFTelemetry do
   alias OpenTelemetry.Span
   alias __MODULE__
 

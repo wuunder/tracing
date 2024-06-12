@@ -1,4 +1,4 @@
-# Changelog for OT v0.1 
+# Changelog for Tracing v0.1 
 
 ## 0.1.0 (2024-04-26)
 

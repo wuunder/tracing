@@ -1,4 +1,4 @@
-defmodule OT.AWSTelemetry do
+defmodule Tracing.AWSTelemetry do
   require OpenTelemetry.Tracer
 
   alias __MODULE__

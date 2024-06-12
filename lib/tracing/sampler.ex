@@ -1,4 +1,4 @@
-defmodule OT.Sampler do
+defmodule Tracing.Sampler do
   @behaviour :otel_sampler
 
   @one_in_hundred ["oban_producers", "oban_jobs"]

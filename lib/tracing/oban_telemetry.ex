@@ -1,4 +1,4 @@
-defmodule OT.ObanTelemetry do
+defmodule Tracing.ObanTelemetry do
   require OpenTelemetry.Tracer
 
   alias __MODULE__
@@ -47,7 +47,7 @@ defmodule OT.ObanTelemetry do
         } = meta,
         _
       ) do
-    OT.extract_map(job_meta)
+    Tracing.extract_map(job_meta)
 
     # microsecond precision
     queue_time_us = DateTime.diff(attempted_at, scheduled_at, :microsecond)

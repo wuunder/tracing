@@ -1,13 +1,13 @@
-defmodule OT do
+defmodule Tracing do
   @moduledoc """
   OpenTelemetry convenience module for often repeated patterns
 
   ## Tracing with a span
 
   ```
-  require OT
+  require Tracing
 
-  OT.with_span "this_is_my_span" do
+  Tracing.with_span "this_is_my_span" do
     // do_work()
   end
   ```
@@ -17,7 +17,7 @@ defmodule OT do
   ## Using the function decorator
 
   ```
-  use OT
+  use Tracing
 
   @decorate with_span()
   def do_work do
@@ -28,8 +28,8 @@ defmodule OT do
 
   defmacro __using__(_) do
     quote do
-      require OT
-      use OT.Decorator
+      require Tracing
+      use Tracing.Decorator
     end
   end
 
@@ -52,11 +52,17 @@ defmodule OT do
   end
 
   @doc """
+  Returns the current span that can be used to add new events or attributes
+  """
+  @spec current_span() :: any()
+  def current_span, do: OpenTelemetry.Tracer.current_span_ctx()
+
+  @doc """
   Simple wrapper around `OpenTelemetry.Span.set_attributes/2`
   """
   def set_attributes(attrs) do
     OpenTelemetry.Span.set_attributes(
-      OpenTelemetry.Tracer.current_span_ctx(),
+      current_span(),
       attrs
     )
   end
@@ -113,13 +119,13 @@ defmodule OT do
   ## Examples
 
   ```
-  spawn(OT.with_span_fn("do something", [key: :value], fn -> do_something() end))
+  spawn(Tracing.with_span_fn("do something", [key: :value], fn -> do_something() end))
 
-  Task.start_link(OT.with_span_fn("do something", fn -> do_something() end))
+  Task.start_link(Tracing.with_span_fn("do something", fn -> do_something() end))
 
-  Task.async_stream(things, OT.with_span_fn("do something", fn thing -> do_something(thing) end))
+  Task.async_stream(things, Tracing.with_span_fn("do something", fn thing -> do_something(thing) end))
 
-  Task.start_link(OT.with_span_fn(&do_something/0))
+  Task.start_link(Tracing.with_span_fn(&do_something/0))
   ```
 
   ## Options
@@ -183,7 +189,7 @@ defmodule OT do
     OpentelemetryPhoenixLiveView.setup()
   end
 
-  def setup_element(:oban), do: OT.ObanTelemetry.setup()
-  def setup_element(:aws), do: OT.AWSTelemetry.setup()
-  def setup_element(:chromic_pdf), do: OT.ChromicPDFTelemetry.setup()
+  def setup_element(:oban), do: Tracing.ObanTelemetry.setup()
+  def setup_element(:aws), do: Tracing.AWSTelemetry.setup()
+  def setup_element(:chromic_pdf), do: Tracing.ChromicPDFTelemetry.setup()
 end

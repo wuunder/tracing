@@ -1,10 +1,10 @@
-defmodule OT.MixProject do
+defmodule Tracing.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :ot,
-      name: "OT",
+      app: :tracing,
+      name: "Tracing",
       version: "0.1.0",
       elixir: "~> 1.16",
       compilers: Mix.compilers(),
@@ -14,7 +14,7 @@ defmodule OT.MixProject do
         plt_file: {:no_warn, "priv/plts/project.plt"},
         format: :dialyxir,
         ignore_warnings: ".dialyzer_ignore.exs",
-        paths: ["_build/dev/lib/ot/ebin"]
+        paths: ["_build/dev/lib/tracing/ebin"]
       ],
       package: package(),
       start_permanent: Mix.env() == :prod
@@ -64,11 +64,11 @@ defmodule OT.MixProject do
 
   defp package() do
     [
-      name: "ot",
+      name: "tracing",
       organization: "wuunder",
       files: ~w(lib .formatter.exs mix.exs README.md LICENSE CHANGELOG.md),
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/wuunder/ot"}
+      links: %{"GitHub" => "https://github.com/wuunder/tracing"}
     ]
   end
 end

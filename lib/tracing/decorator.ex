@@ -1,4 +1,4 @@
-defmodule OT.Decorator do
+defmodule Tracing.Decorator do
   use Decorator.Define, with_span: 0, with_span: 1
 
   def with_span(body, context) do
@@ -7,8 +7,8 @@ defmodule OT.Decorator do
 
   def with_span(name, body, _context) do
     quote do
-      OT.with_span unquote(name) do
-        OT.set_attributes(decorator: "true")
+      Tracing.with_span unquote(name) do
+        Tracing.set_attributes(decorator: "true")
         unquote(body)
       end
     end

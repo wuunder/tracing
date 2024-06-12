@@ -1,4 +1,4 @@
-defmodule OT.Telemetry do
+defmodule Tracing.Telemetry do
   use Supervisor
   import Telemetry.Metrics
 

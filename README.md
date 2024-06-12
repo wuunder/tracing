@@ -1,6 +1,6 @@
-# OT
+# Tracing
 
-OT is a library that contains some standardized telemetry modules with ease of use. It allows control over which modules
+Tracing is a library that contains some standardized telemetry modules with ease of use. It allows control over which modules
 should be activated.
 
 ## Installation
@@ -10,7 +10,7 @@ The package can be installed by adding `ot` to your list of dependencies in `mix
 ```elixir
 def deps do
   [
-    {:ot, "~> 0.1.0", github: "wuunder/ot", branch: "main"}
+    {:tracing, "~> 0.1.0"}
   ]
 end
 ```
@@ -19,11 +19,11 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 
 ## Setup
 
-OT relies on `OpentelemetryMonitor` that should be added to the children list in your `Application.start/2`.
+Tracing relies on `OpentelemetryMonitor` that should be added to the children list in your `Application.start/2`.
 
-Add `OT.setup/1` to `Application.start/2` too with the modules you want to enable telemetry for.
+Add `Tracing.setup/1` to `Application.start/2` too with the modules you want to enable telemetry for.
 
-Also `OT.Telemetry` can be started. The defaults are an empty list of measurements for a period of `10_000` ms. Both can be overridden.
+Also `Tracing.Telemetry` can be started. The defaults are an empty list of measurements for a period of `10_000` ms. Both can be overridden.
 
 ```elixir
 defmodule MyApp.Application do
@@ -32,14 +32,14 @@ defmodule MyApp.Application do
   def start(_type, _args) do
     children = [
       OpentelemetryMonitor,
-      OT.Telemetry,
+      Tracing.Telemetry,
       # or
-      {OT.Telemetry, measurements: [], period: 15_000},
+      {Tracing.Telemetry, measurements: [], period: 15_000},
       ...
     ]
     opts = [...]
 
-    OT.setup([:phoenix, :live_view, :oban, :aws, :chromic_pdf])
+    Tracing.setup([:phoenix, :live_view, :oban, :aws, :chromic_pdf])
 
     Supervisor.start_link(children, opts)
   end
