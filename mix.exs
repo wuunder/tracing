@@ -34,6 +34,7 @@ defmodule Tracing.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:decorator, "~> 1.4"},
       {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
+      {:ex_doc, "~> 0.31", only: :dev, runtime: false},
       {:opentelemetry, "~> 1.3.0"},
       {:opentelemetry_semantic_conventions, "~> 0.2.0"},
       {:opentelemetry_api, "~> 1.2"},
