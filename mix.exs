@@ -40,14 +40,6 @@ defmodule Tracing.MixProject do
       {:opentelemetry_ecto, "~> 1.1"},
       {:opentelemetry_exporter, "~> 1.6"},
       {:opentelemetry_phoenix, "~> 1.2"},
-      {:opentelemetry_phoenix_live_view, "~> 0.1",
-       github: "wuunder/opentelemetry-erlang-contrib",
-       branch: "opentelemetry_phoenix_live_view",
-       sparse: "instrumentation/opentelemetry_phoenix_live_view"},
-      {:opentelemetry_monitor, "~> 0.1",
-       github: "wuunder/opentelemetry-erlang-contrib",
-       branch: "opentelemetry_monitor",
-       sparse: "instrumentation/opentelemetry_monitor"},
       {:opentelemetry_telemetry, "~> 1.0.0"},
       {:telemetry, "~> 1.0"},
       {:telemetry_metrics, "~> 0.4"},
@@ -57,7 +49,7 @@ defmodule Tracing.MixProject do
 
   defp description() do
     """
-      Standardized library for using OpenTelemetry / :telemetry in Elixir applications. 
+      Standardized library for using OpenTelemetry / :telemetry in Elixir applications.
       Provides telemetry modules for Phoenix, LiveView, ChromicPDF and Oban. Also contains a Monitor and Telemetry module."
     """
   end
