@@ -44,7 +44,7 @@ defmodule Tracing.MixProject do
       {:opentelemetry_phoenix, "~> 1.2"},
       {:opentelemetry_telemetry, "~> 1.0.0"},
       {:telemetry, "~> 1.0"},
-      {:telemetry_metrics, "~> 0.4"},
+      {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"}
     ]
   end
