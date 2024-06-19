@@ -5,7 +5,7 @@ defmodule Tracing.MixProject do
     [
       app: :tracing,
       name: "Tracing",
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.16",
       compilers: Mix.compilers(),
       deps: deps(),
