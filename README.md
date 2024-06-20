@@ -10,7 +10,7 @@ The package can be installed by adding `ot` to your list of dependencies in `mix
 ```elixir
 def deps do
   [
-    {:tracing, "~> 0.1.0"}
+    {:tracing, "~> 0.1.2"}
   ]
 end
 ```

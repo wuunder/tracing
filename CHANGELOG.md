@@ -1,5 +1,10 @@
 # Changelog for Tracing v0.1 
 
+## 0.1.2 (2024-06-20)
+
+* Fix wrong call when monitor option is passed into `with_span_fn/3`, call `Tracing.Monitor.monitor` instead of
+  `Tracing.monitor`
+
 ## 0.1.1 (2024-06-19)
 
 * Update telemetry_metrics to 1.0.0
