@@ -5,12 +5,12 @@ should be activated.
 
 ## Installation
 
-The package can be installed by adding `ot` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `tracing` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:tracing, "~> 0.1.2"}
+    {:tracing, "~> 0.1.3"}
   ]
 end
 ```
@@ -39,7 +39,7 @@ defmodule MyApp.Application do
     ]
     opts = [...]
 
-    Tracing.setup([:phoenix, :oban, :aws, :chromic_pdf])
+    Tracing.setup([:phoenix, :liveview, :oban, :aws, :chromic_pdf])
 
     Supervisor.start_link(children, opts)
   end
