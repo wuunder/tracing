@@ -181,11 +181,9 @@ defmodule Tracing do
     Enum.each(elements, &(:ok = setup_element(&1)))
   end
 
-  def setup_element(:phoenix) do
-    OpentelemetryPhoenix.setup()
-  end
-
-  def setup_element(:oban), do: Tracing.ObanTelemetry.setup()
   def setup_element(:aws), do: Tracing.AWSTelemetry.setup()
   def setup_element(:chromic_pdf), do: Tracing.ChromicPDFTelemetry.setup()
+  def setup_element(:liveview), do: Tracing.LiveviewTelemetry.setup()
+  def setup_element(:oban), do: Tracing.ObanTelemetry.setup()
+  def setup_element(:phoenix), do: OpentelemetryPhoenix.setup()
 end
