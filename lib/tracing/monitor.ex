@@ -46,11 +46,16 @@ defmodule Tracing.Monitor do
     {:noreply, state}
   end
 
-  def monitor(span_ctx) do
+  @doc """
+  Start monitoring the given span. If the span is not set, it defaults to `Tracing.current_span()`
+  """
+  def monitor(span \\ nil) do
+    span = span || Tracing.current_span()
+
     if Application.fetch_env!(:opentelemetry, :processors) != [] do
       # monitor first, because the monitor is necessary to clean the ets table.
       :ok = GenServer.call(__MODULE__, {:monitor, self()})
-      true = :ets.insert(__MODULE__, {self(), span_ctx})
+      true = :ets.insert(__MODULE__, {self(), span})
     end
   end
 end
