@@ -1,5 +1,12 @@
 # Changelog for Tracing v0.1 
 
+## 0.1.4 (2024-07-12)
+
+* Add `Tracing.set_current_span/1` function
+* Add `Tracing.monitor/1` as shorthand for `Tracing.Monitor.monitor/1`
+    * Allow `Tracing.monitor/0` to call Monitor for the current span
+* Make use of internal Tracing functions
+
 ## 0.1.3 (2024-06-28)
 
 * Add `LiveviewTelemetry` telemetry module
