@@ -106,6 +106,13 @@ defmodule Tracing do
   end
 
   @doc """
+  Simple wrapper around `OpenTelemetry.Tracer.end_span/0`
+  """
+  def end_span() do
+    OpenTelemetry.Tracer.end_span()
+  end
+
+  @doc """
   Helper function for propogating opentelemetry
   """
   def inject(keywords \\ []), do: :otel_propagator_text_map.inject(keywords)
