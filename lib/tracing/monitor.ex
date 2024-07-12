@@ -18,8 +18,8 @@ defmodule Tracing.Monitor do
   def handle_info({:DOWN, _ref, :process, pid, :normal}, state) do
     :ets.take(__MODULE__, pid)
     |> Enum.each(fn {_pid, ctx} ->
-      _span_ctx = OpenTelemetry.Tracer.set_current_span(ctx)
-      _ = OpenTelemetry.Tracer.end_span()
+      _span_ctx = Tracing.set_current_span(ctx)
+      _ = Tracing.end_span()
     end)
 
     {:noreply, state}
@@ -28,8 +28,8 @@ defmodule Tracing.Monitor do
   def handle_info({:DOWN, _ref, :process, pid, {:shutdown, _}}, state) do
     :ets.take(__MODULE__, pid)
     |> Enum.each(fn {_pid, ctx} ->
-      _span_ctx = OpenTelemetry.Tracer.set_current_span(ctx)
-      _ = OpenTelemetry.Tracer.end_span()
+      _span_ctx = Tracing.set_current_span(ctx)
+      _ = Tracing.end_span()
     end)
 
     {:noreply, state}
@@ -38,9 +38,9 @@ defmodule Tracing.Monitor do
   def handle_info({:DOWN, _ref, :process, pid, reason}, state) do
     :ets.take(__MODULE__, pid)
     |> Enum.each(fn {_pid, ctx} ->
-      _span_ctx = OpenTelemetry.Tracer.set_current_span(ctx)
-      _ = OpenTelemetry.Tracer.add_event("Process died", [{"reason", inspect(reason)}])
-      _ = OpenTelemetry.Tracer.end_span()
+      Tracing.set_current_span(ctx)
+      Tracing.add_event("Process died", [{"reason", inspect(reason)}])
+      Tracing.end_span()
     end)
 
     {:noreply, state}
