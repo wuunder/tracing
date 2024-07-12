@@ -113,6 +113,11 @@ defmodule Tracing do
   end
 
   @doc """
+  Helper function to start Tracing.Monitor
+  """
+  def monitor(span \\ nil), do: Tracing.Monitor.monitor(span)
+
+  @doc """
   Use this function when defining an anonymous function that will be used in _another process_.
   This function will ensure that the span in the parent process is the parent span of the span in the spawned process.
 
@@ -154,7 +159,7 @@ defmodule Tracing do
       parent_span = OpenTelemetry.Tracer.current_span_ctx()
 
       if unquote(opts)[:monitor] do
-        Tracing.Monitor.monitor(parent_span)
+        Tracing.monitor(parent_span)
       end
 
       fn unquote_splicing(fun_args) ->
