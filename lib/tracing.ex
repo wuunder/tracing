@@ -29,6 +29,7 @@ defmodule Tracing do
   defmacro __using__(_) do
     quote do
       require Tracing
+      require OpenTelemetry.Tracer
       use Tracing.Decorator
     end
   end
@@ -38,7 +39,7 @@ defmodule Tracing do
   """
   @spec trace_id() :: String.t()
   def trace_id do
-    case OpenTelemetry.Tracer.current_span_ctx() do
+    case current_span() do
       :undefined ->
         "span_not_found"
 
@@ -58,6 +59,13 @@ defmodule Tracing do
   def current_span, do: OpenTelemetry.Tracer.current_span_ctx()
 
   @doc """
+  Sets the current span to current_span() or what is provided
+  """
+  def set_current_span(span \\ current_span()) do
+    OpenTelemetry.Tracer.set_current_span(span)
+  end
+
+  @doc """
   Simple wrapper around `OpenTelemetry.Span.set_attributes/2`
   """
   def set_attributes(attrs) do
@@ -71,7 +79,8 @@ defmodule Tracing do
   Simple wrapper around `OpenTelemetry.Span.add_event/2`
   """
   def add_event(name, attrs) do
-    OpenTelemetry.Tracer.add_event(
+    OpenTelemetry.Span.add_event(
+      current_span(),
       name,
       attrs
     )
@@ -99,18 +108,12 @@ defmodule Tracing do
   @doc """
   Helper function for propogating opentelemetry
   """
-  def inject(keywords \\ []) do
-    keywords
-    |> :otel_propagator_text_map.inject()
-  end
+  def inject(keywords \\ []), do: :otel_propagator_text_map.inject(keywords)
 
   @doc """
   Helper function for propogating opentelemetry
   """
-  def extract(keywords) do
-    keywords
-    |> :otel_propagator_text_map.extract()
-  end
+  def extract(keywords), do: :otel_propagator_text_map.extract(keywords)
 
   @doc """
   Helper function to start Tracing.Monitor
