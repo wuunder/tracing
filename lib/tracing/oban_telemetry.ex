@@ -1,4 +1,37 @@
 defmodule Tracing.ObanTelemetry do
+  @moduledoc """
+  Handles telemetry and events for Oban workers.
+
+  Allows a function `reportable?/1` to be set in an oban worker to define in which case exceptions should be reported or
+  not. If `reportable?/1` does not exist, all errors will be reported.
+
+  ## Example
+
+  ```elixir
+  defmodule MyApp.Application do
+    use Application
+
+    def start(_type, _args) do
+      # ...
+      Tracing.setup([:oban])
+      Supervisor.start_link([], [name: MyApp.Supervisor])
+    end
+  end
+
+  defmodule MyApp.ObanWorker do
+    use Oban.Worker, queue: "webhooks"
+
+    @impl Oban.Worker
+    def perform(args) do
+      # execute
+    end
+
+    def reportable?(meta) do
+      meta.attempt >= 3
+    end
+  end
+  ```
+  """
   require OpenTelemetry.Tracer
 
   alias __MODULE__
@@ -82,18 +115,46 @@ defmodule Tracing.ObanTelemetry do
         %{kind: kind, reason: reason, stacktrace: stacktrace} = meta,
         _
       ) do
-    case Tracing.current_span() do
-      :undefined ->
+    Tracing.set_attributes(meta: inspect(meta))
+
+    with {:span, context} when context != :undefined <- {:span, Tracing.current_span()},
+         {:reportable, true} <- {:reportable, reportable?(meta)} do
+      ctx = OpentelemetryTelemetry.set_current_telemetry_span(@tracer_id, meta)
+
+      exception = Exception.normalize(kind, reason, stacktrace)
+
+      Span.record_exception(ctx, exception, stacktrace, [])
+      Span.set_status(ctx, OpenTelemetry.status(:error, ""))
+      OpentelemetryTelemetry.end_telemetry_span(@tracer_id, meta)
+    else
+      {:reportable, false} ->
         nil
 
-      _context ->
+      {:reportable, {:error, _}} ->
         ctx = OpentelemetryTelemetry.set_current_telemetry_span(@tracer_id, meta)
-
-        exception = Exception.normalize(kind, reason, stacktrace)
-
-        Span.record_exception(ctx, exception, stacktrace, [])
         Span.set_status(ctx, OpenTelemetry.status(:error, ""))
         OpentelemetryTelemetry.end_telemetry_span(@tracer_id, meta)
+
+      {:span, :undefined} ->
+        nil
     end
+  end
+
+  # Allows configurable reporting. By default it will always report, but it allows the oban worker module to specify if
+  # it needs a custom configurable report true|false option.
+  defp reportable?(%{job: %{worker: worker_name}} = meta) when is_binary(worker_name) do
+    module =
+      worker_name
+      |> String.split(".")
+      |> Module.safe_concat()
+
+    if Code.ensure_loaded?(module) && function_exported?(module, :reportable?, 1) do
+      module.reportable?(meta)
+    else
+      true
+    end
+  rescue
+    ArgumentError ->
+      {:error, RuntimeError.exception("unknown worker: #{worker_name}")}
   end
 end
