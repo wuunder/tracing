@@ -1,5 +1,9 @@
 # Changelog for Tracing v0.1 
 
+## 0.1.5 (2024-08-23)
+
+* Add option to handle expected failurs in `ObanTelemetry` by allowing `reportable?/1` to be set in Oban workers
+
 ## 0.1.4 (2024-07-12)
 
 * Add `Tracing.set_current_span/1` function
