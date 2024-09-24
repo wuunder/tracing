@@ -5,8 +5,9 @@ defmodule Tracing.MixProject do
     [
       app: :tracing,
       name: "Tracing",
-      version: "0.1.5",
+      version: "0.2.0",
       elixir: "~> 1.16",
+      docs: docs(),
       compilers: Mix.compilers(),
       deps: deps(),
       description: description(),
@@ -36,16 +37,24 @@ defmodule Tracing.MixProject do
       {:decorator, "~> 1.4"},
       {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.31", only: :dev, runtime: false},
-      {:opentelemetry, "~> 1.3.0"},
-      {:opentelemetry_semantic_conventions, "~> 0.2.0"},
-      {:opentelemetry_api, "~> 1.2"},
+      {:opentelemetry, "~> 1.5"},
+      {:opentelemetry_semantic_conventions, "~> 1.27"},
+      {:opentelemetry_api, "~> 1.4"},
       {:opentelemetry_ecto, "~> 1.1"},
-      {:opentelemetry_exporter, "~> 1.6"},
-      {:opentelemetry_phoenix, "~> 1.2"},
-      {:opentelemetry_telemetry, "~> 1.0.0"},
+      {:opentelemetry_exporter, "~> 1.8"},
+      {:opentelemetry_cowboy, "1.0.0-rc.1"},
+      {:opentelemetry_phoenix, "~> 2.0.0-rc.1"},
+      {:opentelemetry_telemetry, "~> 1.1"},
       {:telemetry, "~> 1.0"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "Tracing",
+      extras: ["README.md"]
     ]
   end
 

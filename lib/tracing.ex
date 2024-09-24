@@ -200,5 +200,12 @@ defmodule Tracing do
   def setup_element(:chromic_pdf), do: Tracing.ChromicPDFTelemetry.setup()
   def setup_element(:liveview), do: Tracing.LiveviewTelemetry.setup()
   def setup_element(:oban), do: Tracing.ObanTelemetry.setup()
-  def setup_element(:phoenix), do: OpentelemetryPhoenix.setup()
+
+  def setup_element({:phoenix, options}) do
+    if Keyword.get(options, :adapter) == :cowboy2 do
+      :opentelemetry_cowboy.setup()
+    end
+
+    OpentelemetryPhoenix.setup(options)
+  end
 end
