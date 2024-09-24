@@ -1,5 +1,10 @@
 # Changelog for Tracing v0.1 
 
+## 0.2.0 (2024-08-23)
+
+* Update deps
+* Require a specific adapter for phoenix telemetry, can be either `cowboy2` or `bandit`
+
 ## 0.1.5 (2024-08-23)
 
 * Add option to handle expected failurs in `ObanTelemetry` by allowing `reportable?/1` to be set in Oban workers
