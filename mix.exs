@@ -11,7 +11,6 @@ defmodule Tracing.MixProject do
       compilers: Mix.compilers(),
       deps: deps(),
       description: description(),
-      organization: "wuunder",
       dialyzer: [
         plt_file: {:no_warn, "priv/plts/project.plt"},
         format: :dialyxir,
@@ -42,8 +41,8 @@ defmodule Tracing.MixProject do
       {:opentelemetry_api, "~> 1.4"},
       {:opentelemetry_ecto, "~> 1.1"},
       {:opentelemetry_exporter, "~> 1.8"},
-      {:opentelemetry_cowboy, "1.0.0-rc.1"},
-      {:opentelemetry_phoenix, "~> 2.0.0-rc.1"},
+      {:opentelemetry_cowboy, "~> 1.0"},
+      {:opentelemetry_phoenix, "~> 2.0"},
       {:opentelemetry_telemetry, "~> 1.1"},
       {:telemetry, "~> 1.0"},
       {:telemetry_metrics, "~> 1.0"},
@@ -67,10 +66,11 @@ defmodule Tracing.MixProject do
 
   defp package() do
     [
-      name: "tracing",
       files: ~w(lib .formatter.exs mix.exs README.md LICENSE CHANGELOG.md),
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/wuunder/tracing"}
+      links: %{"GitHub" => "https://github.com/wuunder/tracing"},
+      name: "tracing",
+      organization: "wuunder"
     ]
   end
 end
