@@ -1,5 +1,9 @@
 # Changelog for Tracing v0.1 
 
+## 0.2.1 (2025-01-03)
+
+* Update phoenix and cowboy from release candidates to released counterparts
+
 ## 0.2.0 (2024-08-23)
 
 * Update deps
