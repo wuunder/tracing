@@ -69,8 +69,7 @@ defmodule Tracing.MixProject do
       files: ~w(lib .formatter.exs mix.exs README.md LICENSE CHANGELOG.md),
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/wuunder/tracing"},
-      name: "tracing",
-      organization: "wuunder"
+      name: "tracing"
     ]
   end
 end
