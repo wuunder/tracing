@@ -1,5 +1,9 @@
 # Changelog for Tracing v0.1 
 
+## 0.2.2 (2025-04-10)
+
+* Add OpenTelemetryBandit when `bandit` is selected as adapter for Phoenix telemetry
+
 ## 0.2.1 (2025-01-03)
 
 * Update phoenix and cowboy from release candidates to released counterparts
@@ -7,7 +11,7 @@
 ## 0.2.0 (2024-08-23)
 
 * Update deps
-* Require a specific adapter for phoenix telemetry, can be either `cowboy2` or `bandit`
+* Require a specific adapter for Phoenix telemetry, can be either `cowboy2` or `bandit`
 
 ## 0.1.5 (2024-08-23)
 
