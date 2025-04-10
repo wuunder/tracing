@@ -10,7 +10,7 @@ The package can be installed by adding `tracing` to your list of dependencies in
 ```elixir
 def deps do
   [
-    {:tracing, "~> 0.1.3"}
+    {:tracing, "~> 0.2"}
   ]
 end
 ```
@@ -46,3 +46,15 @@ defmodule MyApp.Application do
 end
 ```
 
+### Phoenix
+
+Tracing with Phoenix supports the option to specify the adapter: cowboy2 or bandit. By specifying the adapter it will
+setup the adapter's opentelemetry as well.
+
+When not specifying an adapter, it will start opentelemetry with bandit as assumed adapter. 
+
+```elixir
+Tracing.setup([{:phoenix, adapter: :cowboy2]}])
+Tracing.setup([{:phoenix, adapter: :bandit]}])
+Tracing.setup([:phoenix]) # short for {:phoenix, adapter: :bandit}
+```

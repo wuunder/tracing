@@ -202,10 +202,19 @@ defmodule Tracing do
   def setup_element(:oban), do: Tracing.ObanTelemetry.setup()
 
   def setup_element({:phoenix, options}) do
-    if Keyword.get(options, :adapter) == :cowboy2 do
-      :opentelemetry_cowboy.setup()
-    end
+    case Keyword.get(options, :adapter) do
+      :cowboy2 ->
+        :opentelemetry_cowboy.setup()
+        OpentelemetryPhoenix.setup(options)
 
-    OpentelemetryPhoenix.setup(options)
+      :bandit ->
+        OpentelemetryBandit.setup()
+        OpentelemetryPhoenix.setup(options)
+
+      _ ->
+        OpentelemetryPhoenix.setup(options)
+    end
   end
+
+  def setup_element(:phoenix), do: setup_element({:phoenix, adapter: :bandit})
 end
