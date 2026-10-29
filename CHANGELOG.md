@@ -1,5 +1,17 @@
 # Changelog for Tracing v0.1 
 
+## 0.2.5 (2026-10-29)
+
+* Update OpenTelemetryExporter to update dependencies
+
+## 0.2.4 (2026-02-17)
+
+* Allow OpenTelemetry to be setup with cowboy and bandit
+
+## 0.2.3 (2026-02-11)
+
+* Update OpenTelemetry dependencies
+
 ## 0.2.2 (2025-04-10)
 
 * Add OpenTelemetryBandit when `bandit` is selected as adapter for Phoenix telemetry
