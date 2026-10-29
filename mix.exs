@@ -41,7 +41,7 @@ defmodule Tracing.MixProject do
       {:opentelemetry_api, "~> 1.5"},
       {:opentelemetry_bandit, "~> 0.3"},
       {:opentelemetry_ecto, "~> 1.2"},
-      {:opentelemetry_exporter, "~> 1.10"},
+      {:opentelemetry_exporter, "~> 1.11"},
       {:opentelemetry_cowboy, "~> 1.0"},
       {:opentelemetry_phoenix, "~> 2.0"},
       {:opentelemetry_telemetry, "~> 1.1"},
